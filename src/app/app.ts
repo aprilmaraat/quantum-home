@@ -1,5 +1,8 @@
 import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
+import { Login } from './components/login/login';
+import { Nav } from './shared/components/nav/nav';
+
 
 @Component({
   selector: 'app-root',
@@ -8,5 +11,4 @@ import { RouterOutlet } from '@angular/router';
   styleUrl: './app.scss'
 })
 export class App {
-  protected title = 'quantum-home';
 }

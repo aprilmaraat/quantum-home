@@ -5,6 +5,9 @@ import {MatIconModule} from '@angular/material/icon';
 import {MatButtonModule} from '@angular/material/button';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import { ReactiveFormsModule, UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
+import { SafeStorage } from '../../../core/services/safe-storage';
+import { LOCAL_STORAGE } from '../../shared/constants/local-storage';
+import { Router, RouterStateSnapshot } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -26,7 +29,12 @@ export class Login implements OnInit{
   hidePassword = signal(true);
   validateForm!: UntypedFormGroup;
 
-  constructor() {}
+  constructor(private router: Router, private safeStorage: SafeStorage) {
+    let isLoggedIn = this.safeStorage.get(LOCAL_STORAGE.IS_LOGGED_IN);
+    if( isLoggedIn === 'true') {
+      this.router.navigate(['/dashboard'], {});
+    }
+  }
 
   showHidePassword(event: MouseEvent) {
     this.hidePassword.set(!this.hidePassword());
@@ -36,6 +44,9 @@ export class Login implements OnInit{
   submitForm(event: MouseEvent) {
     if (this.validateForm.valid) {
       console.log('Form Submitted!', this.validateForm.value);
+      this.safeStorage.set(LOCAL_STORAGE.IS_LOGGED_IN, 'true');
+      this.safeStorage.set(LOCAL_STORAGE.RECENT_USER, this.validateForm.value.username);
+      this.router.navigate(['/dashboard']);
     } else {
       console.error('Form is invalid');
     }
@@ -50,8 +61,7 @@ export class Login implements OnInit{
   //   throw new Error('Method not implemented.');
   // }
 
-  ngOnInit(): void {
-    this.validateForm = this.formBuilder.group({
+  ngOnInit(): void {this.validateForm = this.formBuilder.group({
       username: [null, [Validators.required]],
       password: [null, [Validators.required]],
       remember: [true]

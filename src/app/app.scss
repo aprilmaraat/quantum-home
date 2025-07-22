@@ -1,0 +1,17 @@
+@use '../variables.scss' as *;
+
+.example-container {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    background-color: var(--mat-sys-surface);
+    color: var(--mat-sys-on-surface);
+    font-family: Roboto, "Helvetica Neue", sans-serif;
+    .nav-item-container {
+        background: $khaki;
+        color: $dark-khaki;
+        height: 100%;
+        display: flex;
+    }
+}
+

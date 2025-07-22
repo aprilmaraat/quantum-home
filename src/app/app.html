@@ -1,1 +1,25 @@
-<router-outlet />
+<mat-drawer-container class="example-container">
+  <mat-drawer class="nav-item-container" mode="side" opened>
+    <h2>{{ isLoggedIn$ }}</h2>
+    @if(isLoggedIn$) {
+      <h2>Welcome back!</h2>
+    } @else {
+      <h2>Please log in</h2>
+    }
+    <ng-container *ngIf="isLoggedIn$ | async; else notLoggedIn">
+      <mat-list #shoes>
+        <ng-container *ngFor="let shoe of typesOfShoes;">
+          <mat-list-item>{{shoe}}</mat-list-item>
+        </ng-container>
+      </mat-list>
+    </ng-container>
+    <ng-template #notLoggedIn>
+      <mat-list>
+        <mat-list-item>Login to see your shoes</mat-list-item>
+      </mat-list>
+    </ng-template>
+  </mat-drawer>
+  <mat-drawer-content>
+    <router-outlet></router-outlet>
+  </mat-drawer-content>
+</mat-drawer-container>

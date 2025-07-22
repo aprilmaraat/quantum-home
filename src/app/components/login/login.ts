@@ -31,7 +31,8 @@ export class Login implements OnInit{
 
   constructor(private router: Router, private safeStorage: SafeStorage) {
     let isLoggedIn = this.safeStorage.get(LOCAL_STORAGE.IS_LOGGED_IN);
-    if( isLoggedIn === 'true') {
+    if( isLoggedIn === 'true' && isLoggedIn !== null) {
+      console.log('Login: User is already logged in, redirecting to dashboard');
       this.router.navigate(['/dashboard'], {});
     }
   }
@@ -46,6 +47,7 @@ export class Login implements OnInit{
       console.log('Form Submitted!', this.validateForm.value);
       this.safeStorage.set(LOCAL_STORAGE.IS_LOGGED_IN, 'true');
       this.safeStorage.set(LOCAL_STORAGE.RECENT_USER, this.validateForm.value.username);
+      this.safeStorage.refreshIsLoggedIn();
       this.router.navigate(['/dashboard']);
     } else {
       console.error('Form is invalid');

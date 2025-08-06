@@ -12,6 +12,38 @@
         color: $dark-khaki;
         height: 100%;
         display: flex;
+
+        .menu-item {
+            padding: 12px;
+            border: solid 1px black;
+            // display: flex;
+
+            &:hover {
+                color: #fff;
+                background-color: $light-khaki;
+            }
+
+            .mat-icon {
+                border: solid 1px black;
+                display: flex;
+                // height: inherit;
+            }
+
+            .menu-item-label {
+                // margin-left: 8px;
+                display: flex;
+            }
+        }
+
+        .logout-label {
+            color: $light-khaki;
+            padding: 12px;
+
+            &:hover {
+                background-color: transparent;
+            }
+        }
     }
 }
+
 

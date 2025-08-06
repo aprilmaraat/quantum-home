@@ -44,24 +44,16 @@ export class Login implements OnInit{
 
   submitForm(event: MouseEvent) {
     if (this.validateForm.valid) {
-      console.log('Form Submitted!', this.validateForm.value);
-      this.safeStorage.set(LOCAL_STORAGE.IS_LOGGED_IN, 'true');
+      this.safeStorage.set(LOCAL_STORAGE.IS_LOGGED_IN, true);
+      this.safeStorage.set(LOCAL_STORAGE.SESSION_EXPIRY_DATE, new Date(Date.now() + 60 * 60 * 1000)); // 1 hour
       this.safeStorage.set(LOCAL_STORAGE.RECENT_USER, this.validateForm.value.username);
-      this.safeStorage.refreshIsLoggedIn();
+      this.safeStorage.refreshValues();
       this.router.navigate(['/dashboard']);
     } else {
       console.error('Form is invalid');
     }
     event.stopPropagation();
   }
-  
-  // ngOnChanges(changes: SimpleChanges): void {
-  //   throw new Error('Method not implemented.');
-  // }
-
-  // ngOnDestroy(): void {
-  //   throw new Error('Method not implemented.');
-  // }
 
   ngOnInit(): void {this.validateForm = this.formBuilder.group({
       username: [null, [Validators.required]],

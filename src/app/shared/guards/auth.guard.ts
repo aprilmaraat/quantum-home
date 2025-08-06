@@ -10,14 +10,11 @@ export class AuthGuard implements CanActivate {
     canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): MaybeAsync<GuardResult> {
         // Allow access by default; replace with your auth logic as needed
         let isLoggedIn = this.safeStorage.get(LOCAL_STORAGE.IS_LOGGED_IN);
-        console.log('AuthGuard: isLoggedIn:', !isLoggedIn);
-        if(isLoggedIn === 'false' || isLoggedIn === null) {
+        if(isLoggedIn === false || isLoggedIn === null) {
             // Redirect to login if not logged in
-            console.log('AuthGuard: Redirecting to login');
             this.router.navigate(['/login'], { queryParams: { returnUrl: state.url } });
             return false;
         }
-        console.log('AuthGuard: Access granted');
         return true;
     }
 }

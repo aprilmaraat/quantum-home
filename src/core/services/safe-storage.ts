@@ -7,11 +7,12 @@ import { LOCAL_STORAGE } from '../../app/shared/constants/local-storage';
 })
 export class SafeStorage {
   private isBrowser: boolean;
-  private isLoggedIn = new BehaviorSubject<boolean | null>(this.get(LOCAL_STORAGE.IS_LOGGED_IN));
+  private isLoggedIn = new BehaviorSubject<boolean>(this.get(LOCAL_STORAGE.IS_LOGGED_IN) ?? false);
   isLoggedIn$ = this.isLoggedIn.asObservable();
 
   constructor() {
     this.isBrowser = typeof window !== 'undefined' && !!window.localStorage;
+    this.refreshValues();
   }
 
   set<T>(key: string, value: T): void {
@@ -40,10 +41,10 @@ export class SafeStorage {
     }
   }
 
-  refreshIsLoggedIn(): void {
+  refreshValues(): void {
     const storedVal = this.get(LOCAL_STORAGE.IS_LOGGED_IN);
-    console.log('storedVal', storedVal);
-    const newVal = typeof storedVal === 'boolean' ? storedVal : null;
+    this.set(LOCAL_STORAGE.IS_LOGGED_IN, storedVal);
+    const newVal = typeof storedVal === 'boolean' ? storedVal : false;
     this.isLoggedIn.next(newVal);
   }
 }

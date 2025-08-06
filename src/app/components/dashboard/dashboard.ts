@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
-import { SafeStorage } from '../../../core/services/safe-storage';
-import { LOCAL_STORAGE } from '../../shared/constants/local-storage';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-dashboard',
@@ -8,4 +7,6 @@ import { LOCAL_STORAGE } from '../../shared/constants/local-storage';
   templateUrl: './dashboard.html',
   styleUrl: './dashboard.scss'
 })
-export class Dashboard {}
+export class Dashboard {
+  constructor(private route: ActivatedRoute) {}
+}
